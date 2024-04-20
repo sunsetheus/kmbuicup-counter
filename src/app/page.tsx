@@ -4,12 +4,17 @@ import { useState, useEffect } from 'react';
 
 export default function Home() {
   const [point, setPoint] = useState(() => {
-    const storedCount = localStorage.getItem('count');
-    return storedCount ? parseFloat(storedCount) : 0;
+    if (typeof window !== 'undefined') {
+      const storedCount = localStorage.getItem('count');
+      return storedCount ? parseFloat(storedCount) : 0;
+    }
+    return 0;
   });
 
   useEffect(() => {
-    localStorage.setItem('count', point.toString());
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('count', point.toString());
+    }
   }, [point]);
 
   const incrementPoint = () => {
